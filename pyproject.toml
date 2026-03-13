@@ -1,0 +1,72 @@
+[project]
+name = "home-practice"
+version = "0.1.0"
+description = ""
+authors = [
+    {name = "danlaryushin",email = "danlaryushin@gmail.com"}
+]
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "ruff (>=0.15.6,<0.16.0)",
+    "mypy (>=1.19.1,<2.0.0)",
+    "pre-commit (>=4.5.1,<5.0.0)"
+]
+
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.ruff]
+target-version = "py312"
+line-length = 100
+src = ["src", "tests"]
+lint.select = ["E","F","W","I","UP","B","C4","PIE","SIM","PT","PL","Q","RUF"]
+lint.ignore = ["E501"] # если предпочитаешь не рвать длинные строки вручную
+lint.unfixable = ["F401"]
+
+[tool.ruff.lint.isort]
+known-first-party = ["acme_app"]
+combine-as-imports = true
+
+[tool.ruff.format]
+# Like Black, use double quotes for strings.
+quote-style = "single"
+
+# Like Black, indent with spaces, rather than tabs.
+indent-style = "space"
+
+# Like Black, respect magic trailing commas.
+skip-magic-trailing-comma = false
+
+# Like Black, automatically detect the appropriate line ending.
+line-ending = "auto"
+
+# Enable auto-formatting of code examples in docstrings. Markdown,
+# reStructuredText code/literal blocks and doctests are all supported.
+#
+# This is currently disabled by default, but it is planned for this
+# to be opt-out in the future.
+docstring-code-format = false
+
+# Set the line length limit used when formatting code snippets in
+# docstrings.
+#
+# This only has an effect when the `docstring-code-format` setting is
+# enabled.
+docstring-code-line-length = "dynamic"
+
+
+[tool.mypy]
+python_version = "3.12"
+plugins = []
+strict = true
+warn_unused_ignores = true
+warn_redundant_casts = true
+exclude = ["build/", "dist/"]
+mypy_path = ["src"]
+# поэтапно разрешай ошибки с помощью per-module конфигов:
+[[tool.mypy.overrides]]
+module = "tests.*"
+disallow_untyped_defs = false
